@@ -9,17 +9,19 @@ plugins {
   id 'com.axelor.app'
 }
 
+apply from: "versions.gradle"
+
 axelor {
-  title "Axelor ERP"
-  description "Axelor Entreprise Application"
+  title "CodeCraft Web"
+  description "CodeCraft Web powered by Axelor."
 }
 
 allprojects {
   apply plugin: 'idea'
   apply plugin: 'eclipse'
 
-  group = 'com.axelor.apps'
-  version = '8.0.3'
+  group = 'org.codecraft.apps'
+  version = '1.0.0'
 
   java {
     toolchain {

@@ -1,0 +1,7 @@
+
+ext.openSuiteVersion = '8.0.3'
+
+dependencies {
+    api "com.axelor.apps:axelor-base:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-mobile-settings:${openSuiteVersion}"
+}
