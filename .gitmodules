@@ -1,3 +1,6 @@
 [submodule "modules/codecraft-core"]
 	path = modules/codecraft-core
 	url = git@github.com:CodeCraft-developpement/codecraft-core.git
+[submodule "modules/codecraft-import-export"]
+	path = modules/codecraft-import-export
+	url = git@github.com:CodeCraft-developpement/codecraft-import-export.git
