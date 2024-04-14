@@ -9,19 +9,17 @@ plugins {
   id 'com.axelor.app'
 }
 
-apply from: "versions.gradle"
-
 axelor {
-  title "CodeCraft Web"
-  description "CodeCraft Web powered by Axelor."
+  title "Axelor ERP"
+  description "Axelor Entreprise Application"
 }
 
 allprojects {
   apply plugin: 'idea'
   apply plugin: 'eclipse'
 
-  group = 'org.codecraft.apps'
-  version = '1.0.0'
+  group = 'com.axelor.apps'
+  version = '8.0.4'
 
   java {
     toolchain {
@@ -145,34 +143,5 @@ task checkXmlImportsAttributes(type: CheckXmlImportsAttributes) {
 }
 
 task checkXml(dependsOn: ['checkXmlDomainsAttributes','checkXmlViewsAttributes', 'checkXmlImportsAttributes'])
-
-tasks.register('CodecraftFlywayInfo') {
-  group = 'Codecraft migration'
-  description = 'Versioning for database migration'
-  dependsOn ":modules:codecraft-core:flywayInfo"
-  dependsOn ":modules:codecraft-base:flywayInfo"
-}
-
-tasks.register('CodecraftFlywayBaseline') {
-  group = 'Codecraft migration'
-  description = 'Versioning for database migration'
-  dependsOn ":modules:codecraft-core:flywayBaseline"
-  dependsOn ":modules:codecraft-base:flywayBaseline"
-}
-
-tasks.register('CodecraftFlywayClean') {
-  group = 'Codecraft migration'
-  description = 'Versioning for database migration'
-  dependsOn ":modules:codecraft-core:flywayClean"
-  dependsOn ":modules:codecraft-base:flywayClean"
-}
-
-tasks.register('CodecraftFlywayMigrate') {
-  group = 'Codecraft migration'
-  description = 'Versioning for database migration'
-  dependsOn ":modules:codecraft-core:flywayMigrate"
-  dependsOn ":modules:codecraft-base:flywayMigrate"
-}
-
 
 build.finalizedBy archiveReports
