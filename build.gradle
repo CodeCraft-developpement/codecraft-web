@@ -7,7 +7,6 @@ import com.axelor.gradle.tasks.CheckEOLCharsInCsv
 
 plugins {
   id 'com.axelor.app'
-  id "org.flywaydb.flyway" version "9.0.1"
 }
 
 apply from: "versions.gradle"
@@ -147,13 +146,32 @@ task checkXmlImportsAttributes(type: CheckXmlImportsAttributes) {
 
 task checkXml(dependsOn: ['checkXmlDomainsAttributes','checkXmlViewsAttributes', 'checkXmlImportsAttributes'])
 
+tasks.register('CodecraftFlywayInfo') {
+  group = 'Codecraft migration'
+  description = 'Versioning for database migration'
+  dependsOn ":modules:codecraft-core:flywayInfo"
+  dependsOn ":modules:codecraft-base:flywayInfo"
+}
 
-flyway {
-  url = "jdbc:postgresql://localhost:5432/codecraft-web"
-  user = "codecraft"
-  table = "flyway_schema_history"
-  baselineVersion = '1'
-//  cleanDisabled = false
+tasks.register('CodecraftFlywayBaseline') {
+  group = 'Codecraft migration'
+  description = 'Versioning for database migration'
+  dependsOn ":modules:codecraft-core:flywayBaseline"
+  dependsOn ":modules:codecraft-base:flywayBaseline"
+}
+
+tasks.register('CodecraftFlywayClean') {
+  group = 'Codecraft migration'
+  description = 'Versioning for database migration'
+  dependsOn ":modules:codecraft-core:flywayClean"
+  dependsOn ":modules:codecraft-base:flywayClean"
+}
+
+tasks.register('CodecraftFlywayMigrate') {
+  group = 'Codecraft migration'
+  description = 'Versioning for database migration'
+  dependsOn ":modules:codecraft-core:flywayMigrate"
+  dependsOn ":modules:codecraft-base:flywayMigrate"
 }
 
 
