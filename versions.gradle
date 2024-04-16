@@ -4,4 +4,6 @@ ext.openSuiteVersion = '8.0.3'
 dependencies {
     api "com.axelor.apps:axelor-base:${openSuiteVersion}"
     api "com.axelor.apps:axelor-mobile-settings:${openSuiteVersion}"
+    api "org.flywaydb:flyway-core:9.0.1"
+//    api 'org.gradle:gradle-tooling-api:7.3-20210825160000+0000'
 }

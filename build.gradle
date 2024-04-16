@@ -18,8 +18,8 @@ allprojects {
   apply plugin: 'idea'
   apply plugin: 'eclipse'
 
-  group = 'com.axelor.apps'
-  version = '8.0.3'
+  group = 'org.codecraft.apps'
+  version = '1.0.0'
 
   java {
     toolchain {
@@ -147,29 +147,53 @@ task checkXml(dependsOn: ['checkXmlDomainsAttributes','checkXmlViewsAttributes',
 tasks.register('CodecraftFlywayInfo') {
   group = 'Codecraft migration'
   description = 'Versioning for database migration'
-  dependsOn ":modules:codecraft-core:flywayInfo"
-  dependsOn ":modules:codecraft-base:flywayInfo"
+  dependsOn(":modules:codecraft-core:flywayInfo", ":modules:codecraft-base:flywayInfo")
 }
 
 tasks.register('CodecraftFlywayBaseline') {
   group = 'Codecraft migration'
   description = 'Versioning for database migration'
-  dependsOn ":modules:codecraft-core:flywayBaseline"
-  dependsOn ":modules:codecraft-base:flywayBaseline"
+  dependsOn(":modules:codecraft-core:flywayBaseline", ":modules:codecraft-base:flywayBaseline")
 }
 
 tasks.register('CodecraftFlywayClean') {
   group = 'Codecraft migration'
   description = 'Versioning for database migration'
-  dependsOn ":modules:codecraft-core:flywayClean"
-  dependsOn ":modules:codecraft-base:flywayClean"
+  dependsOn(":modules:codecraft-core:flywayClean", ":modules:codecraft-base:flywayClean")
 }
 
 tasks.register('CodecraftFlywayMigrate') {
   group = 'Codecraft migration'
   description = 'Versioning for database migration'
-  dependsOn ":modules:codecraft-core:flywayMigrate"
-  dependsOn ":modules:codecraft-base:flywayMigrate"
+  dependsOn(":modules:codecraft-base:flywayMigrate", ":modules:codecraft-core:flywayMigrate")
 }
+
+tasks.getByPath(':modules:codecraft-base:flywayMigrate').dependsOn(":modules:codecraft-core:flywayMigrate")
+
+//tasks.register('CodecraftFlywayMigrateBase') {
+//  group = 'Codecraft sub-migration'
+//  description = 'Base sub-migration'
+//  dependsOn(":modules:codecraft-base:flywayMigrate")
+//  doLast
+//}
+//
+//tasks.register('CodecraftFlywayMigrateCore') {
+//  group = 'Codecraft sub-migration'
+//  description = 'Core sub-migration'
+//  dependsOn(":modules:codecraft-core:flywayMigrate")
+//}
+
+
+
+tasks.register('flywayMigrateWithCallbacks', JavaExec) {
+  dependsOn CodecraftFlywayMigrate
+
+  main('db.migration.Test')
+  classpath = sourceSets.main.runtimeClasspath
+//  main = 'com.example.FlywayWithCallbacksExecutor'
+//  classpath = sourceSets.main.runtimeClasspath
+
+}
+
 
 build.finalizedBy archiveReports
