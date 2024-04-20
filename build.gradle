@@ -7,6 +7,7 @@ import com.axelor.gradle.tasks.CheckEOLCharsInCsv
 
 plugins {
   id 'com.axelor.app'
+  id "org.flywaydb.flyway" version "${flywayVersion}"
 }
 
 axelor {
@@ -169,31 +170,7 @@ tasks.register('CodecraftFlywayMigrate') {
 }
 
 tasks.getByPath(':modules:codecraft-base:flywayMigrate').dependsOn(":modules:codecraft-core:flywayMigrate")
-
-//tasks.register('CodecraftFlywayMigrateBase') {
-//  group = 'Codecraft sub-migration'
-//  description = 'Base sub-migration'
-//  dependsOn(":modules:codecraft-base:flywayMigrate")
-//  doLast
-//}
-//
-//tasks.register('CodecraftFlywayMigrateCore') {
-//  group = 'Codecraft sub-migration'
-//  description = 'Core sub-migration'
-//  dependsOn(":modules:codecraft-core:flywayMigrate")
-//}
-
-
-
-tasks.register('flywayMigrateWithCallbacks', JavaExec) {
-  dependsOn CodecraftFlywayMigrate
-
-  main('db.migration.Test')
-  classpath = sourceSets.main.runtimeClasspath
-//  main = 'com.example.FlywayWithCallbacksExecutor'
-//  classpath = sourceSets.main.runtimeClasspath
-
-}
+tasks.getByPath(':modules:codecraft-base:flywayInfo').dependsOn(":modules:codecraft-core:flywayInfo")
 
 
 build.finalizedBy archiveReports

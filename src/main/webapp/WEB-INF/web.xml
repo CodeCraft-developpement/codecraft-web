@@ -70,7 +70,7 @@
 
   <!-- Codecraft listener -->
   <listener>
-    <listener-class>org.test.listener.TestServletContextListener</listener-class>
+    <listener-class>org.codecraft.web.listener.AppServletContextListener</listener-class>
   </listener>
 
 </web-app>
