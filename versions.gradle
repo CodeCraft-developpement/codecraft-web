@@ -1,0 +1,74 @@
+import org.gradle.api.internal.artifacts.ivyservice.ivyresolve.strategy.VersionSelectorScheme
+
+ext.openSuiteVersion = '8.1.3'
+
+
+def repos = {
+    mavenCentral() {
+        content {
+            excludeGroup 'com.axelor'
+        }
+    }
+    maven {
+        url 'https://plugins.gradle.org/m2/'
+        content {
+            excludeGroup 'com.axelor'
+        }
+    }
+    maven { url 'https://repository.axelor.com/nexus/public/' }
+}
+
+ext.repos = repos
+repositories repos
+buildscript.repositories repos
+
+// On vire les version SNAPSHOTS
+def versionSelectorScheme = gradle.services.get(VersionSelectorScheme)
+configurations {
+    configureEach {
+        resolutionStrategy.componentSelection.all {
+            if (candidate.version.endsWith('-SNAPSHOT')) {
+                def dependency = allDependencies.find { it.group == candidate.group && it.name == candidate.module }
+                if (dependency && !versionSelectorScheme.parseSelector(dependency.version).matchesUniqueVersion()) {
+                    reject "only releases are allowed for ${dependency}"
+                }
+            }
+            allow
+        }
+    }
+}
+
+
+dependencies {
+    api "com.axelor.apps:axelor-account:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-bank-payment:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-base:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-budget:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-business-production:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-business-project:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-business-support:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-cash-management:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-client-portal:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-contract:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-crm:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-fleet:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-gdpr:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-helpdesk:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-human-resource:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-maintenance:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-marketing:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-mobile-settings:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-production:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-project:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-purchase:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-quality:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-sale:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-stock:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-supplier-management:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-supplier-portal:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-supplychain:${openSuiteVersion}"
+    api "com.axelor.apps:axelor-talent:${openSuiteVersion}"
+    // Modules pro devenus open-source :
+    api "com.axelor.apps:axelor-intervention:8.1.0"
+
+}
