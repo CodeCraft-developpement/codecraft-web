@@ -1,0 +1,3 @@
+[submodule "modules/codecraft-base"]
+	path = modules/codecraft-base
+	url = https://github.com/CodeCraft-developpement/codecraft-base.git
