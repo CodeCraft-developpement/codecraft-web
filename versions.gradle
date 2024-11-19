@@ -1,6 +1,6 @@
 import org.gradle.api.internal.artifacts.ivyservice.ivyresolve.strategy.VersionSelectorScheme
 
-ext.openSuiteVersion = '8.1.3'
+ext.openSuiteVersion = '8.2.2'
 
 
 def repos = {
@@ -21,23 +21,6 @@ def repos = {
 ext.repos = repos
 repositories repos
 buildscript.repositories repos
-
-// On vire les version SNAPSHOTS
-def versionSelectorScheme = gradle.services.get(VersionSelectorScheme)
-configurations {
-    configureEach {
-        resolutionStrategy.componentSelection.all {
-            if (candidate.version.endsWith('-SNAPSHOT')) {
-                def dependency = allDependencies.find { it.group == candidate.group && it.name == candidate.module }
-                if (dependency && !versionSelectorScheme.parseSelector(dependency.version).matchesUniqueVersion()) {
-                    reject "only releases are allowed for ${dependency}"
-                }
-            }
-            allow
-        }
-    }
-}
-
 
 dependencies {
     api "com.axelor.apps:axelor-base:${openSuiteVersion}"
